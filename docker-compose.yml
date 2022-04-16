@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  nginx:
+    build:
+      context: nginx
+    depends_on:
+      - server
+
+  server:
+    build:
+      context: server
+      target: dev
+    volumes:
+      - ./server:/var/www:delegated
+
+  web:
+    build:
+      context: web
+      target: dev
+    volumes:
+      - ./web:/usr/src/app:delegated
+    ports:
+      - "3000:3000"
